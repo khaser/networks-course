@@ -21,6 +21,7 @@ int main() {
             product["id"] = ++new_id;
             products.emplace(new_id, product);
             res.set_content(product.dump(), "application/json");
+            return res.status = httplib::StatusCode::OK_200;
     });
 
     serve.Get("/product/:id", [&](const httplib::Request &req, httplib::Response &res) {
@@ -30,8 +31,10 @@ int main() {
             std::cout << req.body << '\n';
             if (products.contains(id)) {
                 res.set_content(products[id].dump(), "application/json");
+                return res.status = httplib::StatusCode::OK_200;
             } else {
                 res.set_content("Product not found", "text/plain");
+                return res.status = httplib::StatusCode::NotFound_404;
             }
 
     });
@@ -47,16 +50,17 @@ int main() {
                 for (auto& [key, value] : product.items()) {
                     if (key == "id") {
                         res.set_content("Product id is immutable", "text/plain");
-                        return;
+                        return res.status = httplib::StatusCode::Forbidden_403;
                     }
                     products[id][key] = value;
                 }
 
                 res.set_content(products[id].dump(), "application/json");
+                return res.status = httplib::StatusCode::OK_200;
             } else {
                 res.set_content("Product not found", "text/plain");
+                return res.status = httplib::StatusCode::NotFound_404;
             }
-
     });
 
     serve.Delete("/product/:id", [&](const httplib::Request &req, httplib::Response &res) {
@@ -68,10 +72,11 @@ int main() {
             if (it != products.end()) {
                 res.set_content(it->second.dump(), "application/json");
                 products.erase(it);
+                return res.status = httplib::StatusCode::OK_200;
             } else {
                 res.set_content("Product not found", "text/plain");
+                return res.status = httplib::StatusCode::NotFound_404;
             }
-
     });
 
     serve.Get("/products", [&products](const httplib::Request &req, httplib::Response &res) {
@@ -85,6 +90,7 @@ int main() {
             }
 
             res.set_content(json(v).dump(), "application/json");
+            return res.status = httplib::StatusCode::OK_200;
     });
 
     serve.listen("127.0.0.1", 8080);

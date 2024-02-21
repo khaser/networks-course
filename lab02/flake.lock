@@ -42,11 +42,11 @@
         "sway-vim-kbswitch": "sway-vim-kbswitch"
       },
       "locked": {
-        "lastModified": 1707430350,
-        "narHash": "sha256-PKId35+IbyFsRqPmzfVaw0/zdFudQvxNrwJ2uN0W7j4=",
+        "lastModified": 1708544889,
+        "narHash": "sha256-Nxb4SrQrwgRNY9leXJB9ghR3dBDkmNJOOqJDm03CH28=",
         "ref": "master",
-        "rev": "375577ecb81e728ea59168cb07da90be5d68e0c7",
-        "revCount": 33,
+        "rev": "8b79f19f30278aee487688ac80b3400127b1c4b5",
+        "revCount": 35,
         "type": "git",
         "url": "ssh://git@109.124.253.149/~git/nixos-config"
       },

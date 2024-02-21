@@ -93,7 +93,9 @@
 ```
 
 #### Демонстрация работы
-todo
+![postman_12](images/postman_12.png)
+![postman_13](images/postman_13.png)
+![postman_14](images/postman_14.png)
 
 ---
 

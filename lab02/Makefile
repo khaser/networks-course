@@ -13,12 +13,6 @@ build $(EXE): $(OBJECTS)
 run:
 	./$(EXE)
 
-# test:
-# 	@$(foreach test, $(TESTCASES), g++ $(CXXTESTFLAGS) $(test) -Iinclude -o $(TESTEXE) && ./$(TESTEXE) && echo OK;)
-# 	@$(foreach test, $(TESTCASES), g++ $(CXXTESTFLAGS) $(test) -Iinclude -o $(TESTEXE) && valgrind -q ./$(TESTEXE) && echo VALGRIND OK;)
-# 	@rm $(TESTEXE)
-
-
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR)
 	$(CXX) $(CXXFLAGS) -c -MMD -o $@ $<
 

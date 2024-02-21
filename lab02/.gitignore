@@ -4,3 +4,4 @@ compile_commands.json
 obj/
 .envrc
 server
+nohup.out

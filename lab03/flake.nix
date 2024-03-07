@@ -1,5 +1,5 @@
 {
-  description = "C++ web server";
+  description = "C++ beast http multithreaded server and client couple";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
@@ -24,30 +24,40 @@
           let g:cpp_experimental_simple_template_highlight = 0
           let g:cpp_concepts_highlight = 1
 
-          autocmd filetype cpp map <silent> <F1> :!cmake -S server -B build && cmake --build build <CR>
-          autocmd filetype cpp map <silent> <F2> :!./build/server 6363 <CR>
+          autocmd filetype cpp map <silent> <F1> :!cmake -B build && cmake --build build <CR>
+          autocmd filetype cpp map <silent> <F2> :!./build/server/server 6363 <CR>
+          autocmd filetype cpp map <silent> <F3> :!./build/client/client 127.0.0.1 6363 kekw <CR>
           let &path.="src,${pkgs.glibc.dev}/include"
           let g:ycm_clangd_binary_path = '${pkgs.clang-tools}/bin/clangd'
         '';
       });
       toolchain = with pkgs; [ gcc cmake ];
       libs = with pkgs; [ boost ];
+      pkgFabric = (name: pkgs.stdenv.mkDerivation {
+          inherit system;
+          name = "cpp-beast-${name}";
+          nativeBuildInputs = toolchain;
+          buildInputs = libs;
+
+          src = ./${name};
+          enableParallelBuilding = true;
+          doCheck = false;
+          installPhase = ''
+            mkdir -p $out/bin
+            cp ./${name} $out/bin/
+          '';
+        });
+      appFabric = (name: {
+        type = "app";
+        program = "${self.packages.${system}.${name}}/bin/${name}";
+      });
     in {
 
-      defaultPackage = pkgs.stdenv.mkDerivation {
-        inherit system;
-        name = "cpp-client-server";
-        nativeBuildInputs = toolchain;
-        buildInputs = libs;
+      packages."server" = pkgFabric "server";
+      apps."server" = appFabric "server";
 
-        src = ./server;
-        enableParallelBuilding = true;
-        doCheck = false;
-        installPhase = ''
-          mkdir -p $out/bin
-          cp ./server $out/bin/
-        '';
-      };
+      packages."client" = pkgFabric "client";
+      apps."client" = appFabric "client";
 
       devShell = pkgs.mkShell {
         name = "cpp";
@@ -56,4 +66,3 @@
 
     });
 }
-

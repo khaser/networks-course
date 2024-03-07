@@ -1,5 +1,5 @@
 .cache/
 .direnv/
 .envrc
-result
+result*
 shared/

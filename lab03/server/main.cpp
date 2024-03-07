@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) {
             http::request<http::string_body> req;
             {
                 error_code ec;
-                flat_buffer buffer;
-                http::read(sock, buffer, req, ec);
+                flat_buffer buff;
+                http::read(sock, buff, req, ec);
                 if (ec.failed()) {
                     std::cerr << "Read failed: " << ec.message() << "\n";
                     return;

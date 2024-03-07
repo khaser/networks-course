@@ -1,44 +1,38 @@
 # Инструкция по запуску практической работы
 
+### Установка зависимостей
+Для удобства и воспроизводимости установки зависимостей проект завернут в nix flake,
+поэтому требуется сперва поставить этот пакетный менеджер себе в систему.
+
+Пример установки на Ubuntu
+```apt install nix```
+
+Если для используемого диструбутива он не опакетирован, то можно воспользоваться следующим скриптом,
+который ещё в процессе работы ещё и запросит root права, чтобы создать директорию `/nix`
+(согласен, выглядит как жесть, но что поделать?)
+```sh <(curl -L https://nixos.org/nix/install) --daemon```
+
+Если не хочется ставить `nix`, то для сборки данной лабораторной должно хватить
+`cmake` и библиотеки `boost`. Но в таком случае есть большая вероятность, что `cmake` не найдёт `boost`.
+
 ### Сборка и запуск
-Для сборки:
+* Собрать и запустить сервер:
 ```
-make build
+nix --experimental-features 'nix-command flakes' run '.#server' -- server_port concurrency_level
 ```
-
-Для запуска сервиса по адресу `localhost:8080`:
+* Собрать и запустить клиент:
 ```
-make run
+nix --experimental-features 'nix-command flakes' run '.#client' -- server_host server_port filename
 ```
-
-### Необходимое окружение:
-По идее должно хватать следующего:
-* Свежий `gcc`, тк. в Makefile прописано `--std=c++20`
-* Любая версия `make`
-
-### Используемые мною версии:
-
+* Собрать и запустить сервер(без `nix`):
 ```
-$ gcc --version
-gcc (GCC) 12.3.0
-Copyright (C) 2022 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+cmake -B build && cmake --build build && ./build/server/server server_port concurrency_level
+```
+* Собрать и запустить клиент(без `nix`):
+```
+cmake -B build && cmake --build build && ./build/client/client server_host server_port filename
 ```
 
-```
-$ make --version
-GNU Make 4.4.1
-Built for x86_64-pc-linux-gnu
-Copyright (C) 1988-2023 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-```
-
-При желании можно полностью воспроизвести моё окружение, если Вы знакомы с `nix`.
-В директории приложены файлы `flake.nix` и `flake.lock` жёстко фиксирующие версии
-всех пакетов используемых мною для сборки и разработки.
-Однако данный `flake.nix` содержит мою конфигурацию `vim`,
-подгружающегося с приватного репозитория, её нужно удалить из этого файла.
+#### Post Scriptum
 (при возникновении трудностей связаться со мной можно через <https://t.me/khaser1>).
+

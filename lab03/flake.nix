@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
-    khaser.url = "git+ssh://git@109.124.253.149/~git/nixos-config?ref=master";
+    khaser.url = "github:khaser/nix-vim-config";
   };
 
   outputs = { self, nixpkgs, flake-utils, khaser }:

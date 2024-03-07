@@ -25,7 +25,7 @@
           let g:cpp_concepts_highlight = 1
 
           autocmd filetype cpp map <silent> <F1> :!cmake -B build && cmake --build build <CR>
-          autocmd filetype cpp map <silent> <F2> :!./build/server/server 6363 <CR>
+          autocmd filetype cpp map <silent> <F2> :!./build/server/server 6363 3 <CR>
           autocmd filetype cpp map <silent> <F3> :!./build/client/client 127.0.0.1 6363 kekw <CR>
           let &path.="src,${pkgs.glibc.dev}/include"
           let g:ycm_clangd_binary_path = '${pkgs.clang-tools}/bin/clangd'

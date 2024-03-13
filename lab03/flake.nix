@@ -2,7 +2,7 @@
   description = "C++ beast http multithreaded server and client couple";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.follows = "khaser/nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
     khaser.url = "github:khaser/nix-vim-config";
   };

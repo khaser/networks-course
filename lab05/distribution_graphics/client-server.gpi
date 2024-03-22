@@ -1,0 +1,24 @@
+#!/usr/bin/env -S gnuplot -persist
+set terminal png size 1200,600 font "Helvetica,20"
+
+set title "client-server"
+set pm3d map
+F=15e9
+dmin=2e6
+us=30e6
+max(a, b) = (a>b)?a:b
+set hidden3d
+
+set isosamples 50
+set xtics 300,700,2000
+set ytics 10,100,1000
+
+set logscale cb 10
+set cbtics 5
+set format cb "10^{%L}"
+
+set xlabel "Upload speed(kbps)"
+set ylabel "Number of clients" rotate parallel
+set cblabel "Upload time(seconds)"
+
+splot [300:2000] [10:1000] max(y * F / us, F / (dmin))

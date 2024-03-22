@@ -28,7 +28,7 @@
           let g:ycm_clangd_binary_path = '${pkgs.clang-tools}/bin/clangd'
         '';
       });
-      toolchain = with pkgs; [ gcc cmake ];
+      toolchain = with pkgs; [ gcc cmake gnuplot ];
       stdEnv = pkgs.stdenv.mkDerivation;
       libs = with pkgs; [ ];
       pkgFabric = (name: stdEnv {

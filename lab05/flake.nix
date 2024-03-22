@@ -42,7 +42,7 @@
           doCheck = false;
           installPhase = ''
             mkdir -p $out/bin
-            cp ./* $out/bin/
+            cp $(find ./ -maxdepth 1 -type f -executable) $out/bin/
           '';
         });
       appFabric = (name: {
@@ -52,7 +52,7 @@
       vectorizeFabric = (fabric: list:
         with builtins; listToAttrs (map (x: { name=x; value=fabric x; }) list
       ));
-      cppPackages = ["broadcasted_clock"];
+      cppPackages = [ "broadcasted_clock" "remote_shell" ];
     in {
 
       packages = vectorizeFabric pkgFabric cppPackages;

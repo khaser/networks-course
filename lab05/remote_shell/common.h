@@ -2,7 +2,6 @@
 
 #include <string>
 #include <array>
-#include <iostream>
 #include <sys/socket.h>
 
 const size_t BUFF_SIZE = 1024;

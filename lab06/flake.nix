@@ -28,9 +28,9 @@
           let g:ycm_clangd_binary_path = '${pkgs.clang-tools}/bin/clangd'
         '';
       });
-      toolchain = with pkgs; [ gcc cmake gnuplot ];
+      toolchain = with pkgs; [ cmake ];
       stdEnv = pkgs.stdenv.mkDerivation;
-      libs = with pkgs; [ ];
+      libs = with pkgs; [ libz libxcrypt stdenv.cc.cc.lib gtk2 glib cairo pango xorg.libX11 libpng xorg.libSM gdk-pixbuf ];
       pkgFabric = (name: stdEnv {
           inherit system;
           name = "cpp-beast-${name}";
@@ -52,15 +52,15 @@
       vectorizeFabric = (fabric: list:
         with builtins; listToAttrs (map (x: { name=x; value=fabric x; }) list
       ));
-      cppPackages = [ "broadcasted_clock" "remote_shell" ];
+      cppPackages = [  ];
     in {
 
-      packages = vectorizeFabric pkgFabric cppPackages;
-      apps = vectorizeFabric appFabric cppPackages;
+      # packages = vectorizeFabric pkgFabric cppPackages;
+      # apps = vectorizeFabric appFabric cppPackages;
 
       devShell = stdEnv {
         name = "cpp";
-        nativeBuildInputs = [configured-vim pkgs.gdb] ++ toolchain ++ libs;
+        nativeBuildInputs = with pkgs; [ configured-vim gdb filezilla ] ++ toolchain ++ libs;
       };
 
     });

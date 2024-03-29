@@ -1,0 +1,7 @@
+.cache/
+.direnv/
+.envrc
+build/
+result*
+filezilla-server-pkg/
+filezilla-root/

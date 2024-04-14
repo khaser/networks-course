@@ -37,8 +37,9 @@
           nativeBuildInputs = toolchain;
           buildInputs = libs;
 
-          src = ./${name};
+          srcs = ./${name}; # include should be added
           enableParallelBuilding = true;
+          dontMakeSourcesWritable = true;
           doCheck = false;
           installPhase = ''
             mkdir -p $out/bin
@@ -52,11 +53,11 @@
       vectorizeFabric = (fabric: list:
         with builtins; listToAttrs (map (x: { name=x; value=fabric x; }) list
       ));
-      cppPackages = [ "server" "client" ];
+      cppPackages = [ "server" "client" "checksum" ];
     in {
 
-      packages = vectorizeFabric pkgFabric cppPackages;
-      apps = vectorizeFabric appFabric cppPackages;
+      # packages = vectorizeFabric pkgFabric cppPackages;
+      # apps = vectorizeFabric appFabric cppPackages;
 
       devShell = stdEnv {
         name = "cpp";

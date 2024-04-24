@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+timeout 10 nmap -v -A $1 |& tail -n +10 -f

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+ip a | grep 'inet ' | cut -s -d ' ' -f6
